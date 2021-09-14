@@ -9,17 +9,21 @@
 ```c
 //create a thread pool
 thread_pool * create_thread_pool(int thread_limit,int task_limit);
+//thread_limit:线程池总线程数
+//task_limit:最大任务数组大小，待领取任务来到此限制后再添加任务线程会睡眠直到有任务被领走
 
 //add new task
 int add_task(thread_pool* p, void *(*func)(), void * arg);
+//func函数就是自定义的函数任务函数，用于线程领取任务后调用
+//arg是func函数需要的void *类型（无类型指针类型）参数
 ```
 
-使用者需要自定义`work`函数，作为**任务函数**：实际完成一个任务的函数，多线程程序会自觉领取任务后调用这个函数。
+使用者需要自定义`func`函数，作为**任务函数**：实际完成一个任务的函数，多线程程序会自觉领取任务后调用这个函数。
 
-`work`函数原型如下：
+`func`函数原型如下：
 
 ```c
-void * the_work(void * arg);
+void * func(void * arg);
 ```
 
 ## 核心技术
